@@ -1,0 +1,21 @@
+services:
+  # Service pour le frontend
+  - type: web
+    name: apprh-frontend
+    env: node
+    buildCommand: cd frontend/apprh && npm install && npm run build
+    startCommand: cd frontend/apprh && npm run preview
+    envVars:
+      - key: NODE_ENV
+        value: production
+    staticPublishPath: ./frontend/apprh/dist
+
+  # Service pour le backend (si nécessaire)
+  - type: web
+    name: apprh-backend
+    env: python
+    buildCommand: cd backend && pip install -r requirements.txt
+    startCommand: cd backend && python manage.py runserver
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
