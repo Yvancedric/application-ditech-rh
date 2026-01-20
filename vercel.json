@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "buildCommand": "cd frontend/apprh && npm install && npm run build",
+  "outputDirectory": "frontend/apprh/dist",
+  "installCommand": "cd frontend/apprh && npm install",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
