@@ -30,7 +30,18 @@ SECRET_KEY = config ('SECRET_KEY', default='django-insecure-ug8x=hl)yl%s*r7hdvm4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=lambda v: [s.strip() for s in v.split(',')])
+# ALLOWED_HOSTS - Configuration pour Render et développement
+allowed_hosts_str = config('ALLOWED_HOSTS', default='')
+if allowed_hosts_str:
+    ALLOWED_HOSTS = [s.strip() for s in allowed_hosts_str.split(',') if s.strip()]
+elif os.environ.get('RENDER'):  # Sur Render en production
+    # Sur Render, accepter tous les domaines (le domaine exact sera dans les variables d'environnement)
+    # Vous pouvez aussi définir ALLOWED_HOSTS dans les variables d'environnement Render
+    # avec votre domaine exact, ex: apprh-backend-xxxx.onrender.com
+    ALLOWED_HOSTS = ['*']
+else:
+    # Par défaut en développement local
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
