@@ -36,6 +36,13 @@ if [ -d "backend" ]; then
     if [ -f "requirements.txt" ]; then
         echo "Installation des dépendances Python..."
         pip install -r requirements.txt
+        echo "Collecte des fichiers statiques..."
+        python projectditech/manage.py collectstatic --noinput
+        echo "Exécution des migrations..."
+        python projectditech/manage.py migrate --noinput
+    else
+        echo "Erreur: requirements.txt introuvable dans backend/"
+        exit 1
     fi
     echo "Build du backend terminé"
     cd ..

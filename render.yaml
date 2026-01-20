@@ -10,12 +10,12 @@ services:
         value: production
     staticPublishPath: ./frontend/apprh/dist
 
-  # Service pour le backend (si nécessaire)
+  # Service pour le backend
   - type: web
     name: apprh-backend
     env: python
-    buildCommand: cd backend && pip install -r requirements.txt
-    startCommand: cd backend && python manage.py runserver
+    buildCommand: cd backend && pip install -r requirements.txt && python projectditech/manage.py collectstatic --noinput && python projectditech/manage.py migrate --noinput
+    startCommand: cd backend && gunicorn projectditech.projectditech.wsgi:application
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
