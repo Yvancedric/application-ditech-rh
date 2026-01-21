@@ -15,6 +15,7 @@ import EmployeeHistory from '../components/EmployeeHistory'
 import Contracts from '../components/Contracts'
 import PresenceAbsence from '../components/PresenceAbsence'
 import Payroll from '../components/Payroll'
+import EmployeePayslips from '../components/EmployeePayslips'
 import Recruitment from '../components/Recruitment'
 import TrainingEvaluation from '../components/TrainingEvaluation'
 import DocumentScanner from '../components/DocumentScanner'
@@ -159,6 +160,12 @@ const Dashboard = () => {
           icon: 'DollarSign',
           path: '/dashboard/fiches-paie',
           description: 'Fiches de paie'
+        },
+        {
+          label: 'Bulletins par employé',
+          icon: 'User',
+          path: '/dashboard/bulletins-employe',
+          description: 'Consulter et télécharger les bulletins de paie de chaque employé'
         },
         {
           label: 'Primes',
@@ -405,6 +412,7 @@ const Dashboard = () => {
           <Route path="/conges" element={<PresenceAbsence tab="conges" />} />
           <Route path="/retards-heures-supp" element={<PresenceAbsence tab="retards" />} />
           <Route path="/fiches-paie" element={<Payroll tab="payslips" />} />
+          <Route path="/bulletins-employe" element={<EmployeePayslips />} />
           <Route path="/primes" element={<Payroll tab="bonuses" />} />
           <Route path="/retenues" element={<Payroll tab="retentions" />} />
           <Route path="/deductions" element={<Payroll tab="deductions" />} />
