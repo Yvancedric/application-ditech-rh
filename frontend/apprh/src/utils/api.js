@@ -1,8 +1,11 @@
 import axios from 'axios'
 
+// URL du backend - utilise la variable d'environnement ou localhost par défaut en développement
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+
 // Créer une instance axios avec configuration de base
 const api = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: API_URL,
   timeout: 20000, // Timeout de 20 secondes par défaut pour éviter les chargements infinis
   headers: {
     'Content-Type': 'application/json',
@@ -73,7 +76,7 @@ api.interceptors.response.use(
     
     // Si c'est une erreur réseau (pas de réponse du serveur)
     if (!error.response) {
-      const errorMessage = 'Erreur réseau - Le serveur ne répond pas. Vérifiez que le backend est démarré sur http://localhost:8000'
+      const errorMessage = `Erreur réseau - Le serveur ne répond pas. URL du backend: ${API_URL}`
       if (import.meta.env.MODE === 'development') {
         console.error(errorMessage)
       }

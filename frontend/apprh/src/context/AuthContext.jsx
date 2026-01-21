@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import axios from 'axios'
+import api from '../utils/api'
 
 const AuthContext = createContext()
 
@@ -92,7 +93,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     try {
       // Utiliser l'endpoint /ditech/login/ qui retourne access, refresh et user
-      const response = await axios.post('http://localhost:8000/ditech/login/', {
+      const response = await api.post('/ditech/login/', {
         username,
         password,
       })
