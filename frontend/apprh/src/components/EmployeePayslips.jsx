@@ -219,7 +219,8 @@ const EmployeePayslips = () => {
   return (
     <div className="employee-payslips-page">
       <div className="page-header">
-        <h1>Bulletins de Paie par Employé</h1>
+        <h1>Bulletins de Salaire des Employé</h1>
+        <p>Gerez les bulletins de salaire</p>
       </div>
 
       {error && (
