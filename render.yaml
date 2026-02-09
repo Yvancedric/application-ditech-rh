@@ -1,0 +1,30 @@
+databases:
+  # Base PostgreSQL persistante (les données survivent aux redéploiements)
+  - name: RH_db
+
+services:
+  # Service pour le frontend
+  - type: web
+    name: apprh-frontend
+    env: node
+    buildCommand: cd frontend/apprh && npm install && npm run build
+    startCommand: cd frontend/apprh && npm run preview
+    envVars:
+      - key: NODE_ENV
+        value: production
+    staticPublishPath: ./frontend/apprh/dist
+
+  # Service pour le backend
+  - type: web
+    name: apprh-backend
+    env: python
+    buildCommand: cd backend && pip install -r requirements.txt && python projectditech/manage.py collectstatic --noinput && python projectditech/manage.py migrate --noinput
+    startCommand: cd backend && gunicorn projectditech.projectditech.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.14.2
+      # Internal Database URL injectée automatiquement par Render (ne pas mettre dans .env)
+      - key: DATABASE_URL
+        fromDatabase:
+          name: RH_db
+          property: connectionString

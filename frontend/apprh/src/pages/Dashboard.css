@@ -1,0 +1,891 @@
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  background: #f8f9fa;
+  width: 100%;
+  max-width: 100vw;
+  position: relative;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Sidebar - fond blanc, texte bleu */
+.dashboard-sidebar {
+  width: 280px;
+  background: #ffffff;
+  color: #1e3a8a;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  transition: all 0.3s ease;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  border-right: 1px solid #e5e7eb;
+}
+
+.dashboard-sidebar.closed {
+  width: 70px;
+}
+
+.sidebar-header {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.logo-container.logo-text-container {
+  flex-direction: column;
+  gap: 0.15rem;
+  align-items: center;
+  text-align: center;
+}
+
+.sidebar-brand-top {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #1e3a8a;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  white-space: nowrap;
+  font-size: 15px;
+}
+
+.sidebar-company-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  white-space: nowrap;
+}
+
+.sidebar-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.dashboard-sidebar.closed .sidebar-header h2 {
+  display: none;
+}
+
+.dashboard-sidebar.closed .logo-container {
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.dashboard-sidebar.closed .logo-text-container .sidebar-brand-top.short {
+  font-size: 0.6rem;
+}
+
+.dashboard-sidebar.closed .logo-text-container .sidebar-company-name.short {
+  font-size: 1rem;
+}
+
+.dashboard-sidebar.closed .sidebar-toggle-group {
+  display: none;
+}
+
+.dashboard-sidebar.closed .sidebar-header h2 {
+  display: none;
+}
+
+.sidebar-toggle {
+  background: transparent;
+  border: none;
+  color: #1e3a8a;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.sidebar-toggle:hover {
+  background: rgba(30, 58, 138, 0.1);
+}
+
+/* Toggle Button Group */
+.sidebar-toggle-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.sidebar-header .logo-container {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Desktop Toggle Button (visible sur desktop) - MASQUÉ */
+.sidebar-toggle.desktop-toggle {
+  display: none;
+}
+
+/* Mobile Close Button (visible sur mobile) */
+.sidebar-toggle.mobile-close {
+  display: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.menu-section {
+  margin-bottom: 0.5rem;
+  width: 100%;
+  display: block;
+}
+
+.menu-item {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: transparent;
+  border: none;
+  color: #1e3a8a;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  transition: background 0.2s;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.menu-item:hover {
+  background: rgba(30, 58, 138, 0.08);
+}
+
+.menu-item.active {
+  background: rgba(30, 58, 138, 0.12);
+  border-left: 3px solid #2563eb;
+  color: #1e3a8a;
+}
+
+.menu-icon {
+  font-size: 1.25rem;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.menu-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-arrow {
+  font-size: 0.75rem;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.menu-item.open .menu-arrow {
+  transform: rotate(90deg);
+}
+
+.dashboard-sidebar.closed .menu-label,
+.dashboard-sidebar.closed .menu-arrow {
+  display: none;
+}
+
+/* S'assurer que tous les éléments sont en colonne */
+.dashboard-sidebar * {
+  box-sizing: border-box;
+}
+
+/* Sidebar toujours ouvert sur mobile quand mobile-open */
+.dashboard-sidebar.mobile-open {
+  width: 280px;
+}
+
+.dashboard-sidebar.mobile-open .menu-label,
+.dashboard-sidebar.mobile-open .menu-arrow {
+  display: inline-block;
+}
+
+.dashboard-sidebar.mobile-open .submenu {
+  display: block !important;
+}
+
+.dashboard-sidebar.mobile-open .user-info {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Forcer la disposition en colonne pour TOUS les éléments du menu */
+.dashboard-sidebar .sidebar-nav {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+}
+
+.dashboard-sidebar .menu-section {
+  display: block !important;
+  width: 100% !important;
+}
+
+.dashboard-sidebar .submenu {
+  display: block !important;
+  width: 100% !important;
+}
+
+.dashboard-sidebar .menu-item,
+.dashboard-sidebar .submenu-item {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  align-items: center !important;
+  flex-shrink: 0;
+}
+
+/* Empêcher tout affichage horizontal des sections - RÈGLES STRICTES */
+.dashboard-sidebar .sidebar-nav {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  width: 100% !important;
+}
+
+.dashboard-sidebar .sidebar-nav > * {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  flex-basis: auto !important;
+  float: none !important;
+  clear: both !important;
+}
+
+/* S'assurer que les sections du menu ne s'affichent jamais en ligne */
+.dashboard-sidebar .menu-section,
+.dashboard-sidebar .menu-section > * {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  float: none !important;
+  clear: both !important;
+}
+
+/* Les items du menu sont en ligne (icône + texte) MAIS les sections sont en colonne */
+.dashboard-sidebar .menu-section .menu-item,
+.dashboard-sidebar .menu-section .submenu-item {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  float: none !important;
+}
+
+.dashboard-sidebar.mobile-open .sidebar-header h2 {
+  display: block;
+}
+
+.submenu {
+  background: rgba(30, 58, 138, 0.05);
+  padding: 0.5rem 0;
+  display: block;
+  width: 100%;
+}
+
+.submenu-item {
+  width: 100%;
+  padding: 0.75rem 1.5rem 0.75rem 3.5rem;
+  background: transparent;
+  border: none;
+  color: #1e3a8a;
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  transition: background 0.2s;
+  box-sizing: border-box;
+}
+
+.submenu-item:hover {
+  background: rgba(30, 58, 138, 0.08);
+}
+
+.submenu-item.active {
+  background: rgba(30, 58, 138, 0.12);
+  color: #1e3a8a;
+  border-left: 3px solid #2563eb;
+}
+
+.submenu-icon {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.submenu-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #1e3a8a;
+}
+
+.user-role {
+  font-size: 0.85rem;
+  color: #64748b;
+  text-transform: capitalize;
+}
+
+.dashboard-sidebar.closed .user-info {
+  display: none;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 6px;
+  color: #dc2626;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #b91c1c;
+}
+
+.dashboard-sidebar.closed .logout-btn span:not(:first-child) {
+  display: none;
+}
+
+/* Main Content */
+.dashboard-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #f8f9fa;
+  min-height: 100vh;
+  margin-left: 280px;
+  width: calc(100% - 280px);
+  max-width: calc(100% - 280px);
+  position: relative;
+  transition: margin-left 0.3s ease, width 0.3s ease;
+  box-sizing: border-box;
+}
+
+.dashboard.sidebar-closed .dashboard-content {
+  margin-left: 70px;
+  width: calc(100% - 70px);
+  max-width: calc(100% - 70px);
+}
+
+.dashboard.sidebar-open .dashboard-content {
+  margin-left: 280px;
+  width: calc(100% - 280px);
+  max-width: calc(100% - 280px);
+}
+
+/* Scrollbar styling pour sidebar et dashboard - IMPORTANT: Doit être après les autres styles */
+.dashboard-sidebar::-webkit-scrollbar,
+.dashboard-content::-webkit-scrollbar,
+.sidebar-nav::-webkit-scrollbar,
+.dashboard.sidebar-closed .dashboard-content::-webkit-scrollbar,
+.dashboard.sidebar-open .dashboard-content::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+.dashboard-sidebar::-webkit-scrollbar-track,
+.dashboard-content::-webkit-scrollbar-track,
+.sidebar-nav::-webkit-scrollbar-track,
+.dashboard.sidebar-closed .dashboard-content::-webkit-scrollbar-track,
+.dashboard.sidebar-open .dashboard-content::-webkit-scrollbar-track {
+  background: rgba(30, 144, 255, 0.1) !important;
+  border-radius: 4px !important;
+}
+
+.dashboard-sidebar::-webkit-scrollbar-thumb,
+.dashboard-content::-webkit-scrollbar-thumb,
+.sidebar-nav::-webkit-scrollbar-thumb,
+.dashboard.sidebar-closed .dashboard-content::-webkit-scrollbar-thumb,
+.dashboard.sidebar-open .dashboard-content::-webkit-scrollbar-thumb {
+  background: dodgerblue !important;
+  border-radius: 4px !important;
+}
+
+.dashboard-sidebar::-webkit-scrollbar-thumb:hover,
+.dashboard-content::-webkit-scrollbar-thumb:hover,
+.sidebar-nav::-webkit-scrollbar-thumb:hover,
+.dashboard.sidebar-closed .dashboard-content::-webkit-scrollbar-thumb:hover,
+.dashboard.sidebar-open .dashboard-content::-webkit-scrollbar-thumb:hover {
+  background: #1e90ff !important;
+}
+
+/* Firefox scrollbar styling */
+.dashboard-sidebar,
+.dashboard-content,
+.sidebar-nav,
+.dashboard.sidebar-closed .dashboard-content,
+.dashboard.sidebar-open .dashboard-content {
+  scrollbar-width: thin !important;
+  scrollbar-color: dodgerblue rgba(30, 144, 255, 0.1) !important;
+}
+
+/* Scrollbar styling pour tous les éléments scrollables dans le dashboard-content */
+.dashboard-content *::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+.dashboard-content *::-webkit-scrollbar-track {
+  background: rgba(30, 144, 255, 0.1) !important;
+  border-radius: 4px !important;
+}
+
+.dashboard-content *::-webkit-scrollbar-thumb {
+  background: dodgerblue !important;
+  border-radius: 4px !important;
+}
+
+.dashboard-content *::-webkit-scrollbar-thumb:hover {
+  background: #1e90ff !important;
+}
+
+/* Firefox scrollbar pour tous les éléments scrollables */
+.dashboard-content * {
+  scrollbar-width: thin !important;
+  scrollbar-color: dodgerblue rgba(30, 144, 255, 0.1) !important;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1100;
+  background: #ffffff;
+  color: #1e3a8a;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: background 0.2s;
+}
+
+.mobile-menu-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.mobile-menu-btn:focus {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+
+.hamburger-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  display: block;
+}
+
+/* Mobile Overlay */
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .dashboard-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    width: 280px;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .dashboard-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .dashboard-sidebar.closed {
+    transform: translateX(-100%);
+  }
+
+  .dashboard-sidebar.closed.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-header {
+    justify-content: center;
+    position: relative;
+  }
+
+  .logo-container {
+    width: 100%;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .dashboard-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding: 0 !important;
+    padding-top: 0 !important;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .dashboard.sidebar-closed .dashboard-content,
+  .dashboard.sidebar-open .dashboard-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  .dashboard-content > * {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  .mobile-overlay {
+    display: block;
+  }
+
+  .sidebar-toggle.desktop-toggle {
+    display: none;
+  }
+
+  .sidebar-toggle.mobile-close {
+    display: flex;
+  }
+
+  /* Forcer la disposition en colonne sur mobile - Règles strictes */
+  .dashboard-sidebar {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .sidebar-nav {
+    flex-direction: column !important;
+    display: flex !important;
+    align-items: stretch !important;
+    width: 100% !important;
+  }
+
+  .menu-section {
+    display: block !important;
+    width: 100% !important;
+    margin-bottom: 0.5rem;
+  }
+
+  .menu-item {
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-shrink: 0;
+    align-items: center !important;
+  }
+
+  .submenu {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .submenu-item {
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-shrink: 0;
+    align-items: center !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    top: 0.75rem;
+    left: 0.75rem;
+    width: 44px;
+    height: 44px;
+  }
+
+  .hamburger-icon {
+    font-size: 1.35rem;
+  }
+
+  .dashboard-sidebar {
+    width: 280px;
+  }
+
+  .sidebar-header {
+    padding: 1rem;
+    justify-content: center;
+    position: relative;
+  }
+
+  .sidebar-toggle-group {
+    right: 0.75rem;
+  }
+
+  .logo-container {
+    gap: 0;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .sidebar-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .menu-item {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .submenu-item {
+    padding: 0.65rem 1.25rem 0.65rem 3rem;
+    font-size: 0.85rem;
+  }
+
+  .sidebar-footer {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-menu-btn {
+    top: 0.5rem;
+    left: 0.5rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .hamburger-icon {
+    font-size: 1.25rem;
+  }
+
+  .dashboard-sidebar {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .dashboard-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .dashboard-sidebar.closed {
+    transform: translateX(-100%);
+  }
+
+  .sidebar-header {
+    padding: 0.75rem;
+    justify-content: center;
+    position: relative;
+  }
+
+  .sidebar-toggle-group {
+    right: 0.5rem;
+  }
+
+  .logo-container {
+    gap: 0;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .sidebar-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .menu-item {
+    padding: 0.75rem 1rem;
+  }
+
+  .submenu-item {
+    padding: 0.65rem 1rem 0.65rem 2.5rem;
+  }
+}
+
+/* Scrollbar styling FINAL - Doit être à la fin pour override tous les autres styles */
+.dashboard-sidebar::-webkit-scrollbar,
+.dashboard-content::-webkit-scrollbar,
+.sidebar-nav::-webkit-scrollbar,
+.dashboard .dashboard-content::-webkit-scrollbar,
+.dashboard.sidebar-closed .dashboard-content::-webkit-scrollbar,
+.dashboard.sidebar-open .dashboard-content::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+.dashboard-sidebar::-webkit-scrollbar-track,
+.dashboard-content::-webkit-scrollbar-track,
+.sidebar-nav::-webkit-scrollbar-track,
+.dashboard .dashboard-content::-webkit-scrollbar-track,
+.dashboard.sidebar-closed .dashboard-content::-webkit-scrollbar-track,
+.dashboard.sidebar-open .dashboard-content::-webkit-scrollbar-track {
+  background: rgba(30, 144, 255, 0.1) !important;
+  border-radius: 4px !important;
+}
+
+.dashboard-sidebar::-webkit-scrollbar-thumb,
+.dashboard-content::-webkit-scrollbar-thumb,
+.sidebar-nav::-webkit-scrollbar-thumb,
+.dashboard .dashboard-content::-webkit-scrollbar-thumb,
+.dashboard.sidebar-closed .dashboard-content::-webkit-scrollbar-thumb,
+.dashboard.sidebar-open .dashboard-content::-webkit-scrollbar-thumb {
+  background: dodgerblue !important;
+  border-radius: 4px !important;
+}
+
+.dashboard-sidebar::-webkit-scrollbar-thumb:hover,
+.dashboard-content::-webkit-scrollbar-thumb:hover,
+.sidebar-nav::-webkit-scrollbar-thumb:hover,
+.dashboard .dashboard-content::-webkit-scrollbar-thumb:hover,
+.dashboard.sidebar-closed .dashboard-content::-webkit-scrollbar-thumb:hover,
+.dashboard.sidebar-open .dashboard-content::-webkit-scrollbar-thumb:hover {
+  background: #1e90ff !important;
+}
+
+/* Firefox scrollbar - FINAL */
+.dashboard-sidebar,
+.dashboard-content,
+.sidebar-nav,
+.dashboard .dashboard-content,
+.dashboard.sidebar-closed .dashboard-content,
+.dashboard.sidebar-open .dashboard-content {
+  scrollbar-width: thin !important;
+  scrollbar-color: dodgerblue rgba(30, 144, 255, 0.1) !important;
+}
